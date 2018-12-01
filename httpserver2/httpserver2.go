@@ -1,4 +1,4 @@
-package http2
+package httpserver2
 
 import (
 	"io"
