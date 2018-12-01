@@ -1,9 +1,9 @@
 package main
 
 import (
-	"github.com/jamesacampbell/go-examples/redis1"
+	redis1 "github.com/jamesacampbell/go-examples/redis1"
 )
 
 func main() {
-	redis1.RedisCon()
+	redis1.Redis1()
 }

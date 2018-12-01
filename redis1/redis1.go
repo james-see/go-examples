@@ -18,9 +18,9 @@ func RedisCon() *redis.Client {
 
 // Redis1 : Connect to redis
 func Redis1() {
-	r := redisCon() // returned client object
+	r := RedisCon() // returned client object
 	// test ping pong command
-	pong, _ := redisdb.Ping().Result()
+	pong, _ := r.Ping().Result()
 	fmt.Println(pong) // should print PONG to console
 
 }
