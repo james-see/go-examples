@@ -11,4 +11,8 @@ The code is in redis1 folder, but just run main.go from root and it will run thi
 
 It should print `PONG` to show it is connected.
 
-## 2 coming soon
+## 2 HTTP SERVER
+
+The code is in the httpserver2 folder, it also runs from the root main.go file just fine and server Hello World to 127.0.0.1:1337 because you are a N00B. ;)
+
+
