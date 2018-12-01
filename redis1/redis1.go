@@ -1,4 +1,4 @@
-package main
+package redis1
 
 import (
 	"fmt"
@@ -6,8 +6,8 @@ import (
 	"github.com/go-redis/redis"
 )
 
-// Connect to local redis instance and return Client object
-func redisCon() *redis.Client {
+// RedisCon : to local redis instance and return Client object
+func RedisCon() *redis.Client {
 	r := redis.NewClient(&redis.Options{
 		Addr:     "localhost:6379",
 		Password: "", // no password set
@@ -16,7 +16,8 @@ func redisCon() *redis.Client {
 	return r
 }
 
-func main() {
+// Redis1 : Connect to redis
+func Redis1() {
 	r := redisCon() // returned client object
 	// test ping pong command
 	pong, _ := redisdb.Ping().Result()
