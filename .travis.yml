@@ -13,4 +13,4 @@ script:
 - "./build.sh"
 
 addons:
-  chrome: canary
+  chrome: beta
