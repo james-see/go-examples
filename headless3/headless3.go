@@ -62,18 +62,22 @@ func createRequest() *http.Client {
 	return client
 }
 
+// LoadJS : This is it!
 func LoadJS(username string, remote *godet.RemoteDebugger) {
 	remote.RuntimeEvents(true)
 	remote.NetworkEvents(true)
 	remote.PageEvents(true)
 	remote.DOMEvents(true)
 	remote.LogEvents(true)
+	fmt.Printf("https://www.instagram.com/%s/", username)
+	fmt.Println()
 	_, _ = remote.Navigate(fmt.Sprintf("https://www.instagram.com/%s/", username))
 	_ = remote.SaveScreenshot("screenshot.png", 0644, 0, true)
 
 }
 
-func Headless3() {
+// Headless3 : It works!
+func Headless3(defaultuser string) {
 	switch runtime.GOOS {
 	case "darwin":
 		chromeapp = `open "/Applications/Google Chrome Canary.app" --args`
@@ -111,11 +115,14 @@ func Headless3() {
 	remote.PageEvents(true)
 	remote.DOMEvents(true)
 	remote.LogEvents(true)
-
-	reader := bufio.NewReader(os.Stdin)
-	fmt.Print("Enter instagram username to check and screenshot: ")
-	text, _ := reader.ReadString('\n')
-	fmt.Printf("Username: %s", text)
-	LoadJS(text, remote)
+	if defaultuser != "defaultuser" {
+		LoadJS(defaultuser, remote)
+	} else {
+		reader := bufio.NewReader(os.Stdin)
+		fmt.Print("Enter instagram username to check and screenshot: ")
+		text, _ := reader.ReadString('\n')
+		fmt.Printf("Username: %s", text)
+		LoadJS(text, remote)
+	}
 
 }
