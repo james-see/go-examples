@@ -1,0 +1,9 @@
+os: osx # Only use OSX if it's really needed!
+
+language: go
+
+go:
+- tip # The latest version of Go.
+
+script:
+- "./build.sh"
