@@ -8,9 +8,9 @@ go:
 before_install:
   - chmod +x build.sh
   - # start your web application and listen on `localhost`
-  - "/Applications/Google\\ Chrome.app/Contents/MacOS/Google\\ Chrome --headless --disable-gpu --remote-debugging-port=9222 http://localhost &"
+  - open -a '/Applications/Google Chrome Canary.app' --args --headless --remote-debugging-port=9222 --hide-scrollbars --disable-gpu http://localhost &
 script:
 - "./build.sh"
 
 addons:
-  chrome: beta
+  chrome: canary
