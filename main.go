@@ -26,6 +26,8 @@ func main() {
 
 	go http2.HTTPExample()
 	time.Sleep(10 * time.Second)
+
+	headliner()
 	// More coming soon
 	os.Exit(0)
 }
