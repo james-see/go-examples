@@ -2,6 +2,7 @@ package headless3
 
 import (
 	"bufio"
+	"context"
 	"fmt"
 	"io/ioutil"
 	"log"
@@ -11,6 +12,9 @@ import (
 	"runtime"
 	"time"
 
+	"github.com/chromedp/chromedp"
+	cdp "github.com/chromedp/chromedp"
+	"github.com/chromedp/chromedp/runner"
 	"github.com/raff/godet"
 )
 
@@ -87,9 +91,10 @@ func Headless3(defaultuser string) {
 	if chromeapp != "" {
 		chromeapp = " --headless --remote-debugging-port=9222 --hide-scrollbars"
 	}
-	exec.Command("open -a '/Applications/Google Chrome Canary.app' --args --headless --remote-debugging-port=9222 --hide-scrollbars").Run()
+	exec.Command(chromeapp).Run()
+	//exec.Command("open -a '/Applications/Google\\ Chrome\\ Canary.app' --args --headless --remote-debugging-port=9222 --hide-scrollbars --remote-debugging-address=0.0.0.0").Run()
 	port := "localhost:9222"
-	nums := []int{1, 2, 3, 4, 5, 6, 7, 8, 9, 10}
+	nums := []int{1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20}
 	for i := range nums {
 		if i > 0 {
 			time.Sleep(500 * time.Millisecond)
@@ -125,4 +130,57 @@ func Headless3(defaultuser string) {
 		LoadJS(text, remote)
 	}
 
+}
+
+//Headless4 is using the preferred chromedp package for headless chrome interaction
+func Headless4(instagramuser string) (texter string) {
+	var err error
+	// create context
+	ctxt, cancel := context.WithCancel(context.Background())
+	defer cancel()
+	// create chrome instance
+	c, err := cdp.New(ctxt, cdp.WithRunnerOptions(
+		runner.Flag("headless", true),
+		runner.Flag("disable-gpu", true),
+		runner.Flag("hide-scrollbars", true)))
+	if err != nil {
+		log.Fatal(err)
+	}
+	// run task list
+	var buf []byte // holder for the image data from the screenshot call
+	url := fmt.Sprintf("https://www.instagram.com/%s/", instagramuser)
+	err = c.Run(ctxt, screenshot(url, `react-root`, &buf, &texter))
+	if err != nil {
+		log.Fatal(err)
+	}
+	// shutdown chrome
+	// err = c.Shutdown(ctxt)
+	// if err != nil {
+	// 	log.Fatal(err)
+	// }
+
+	// // wait for chrome to finish
+	// err = c.Wait()
+	// if err != nil {
+	// 	log.Fatal(err)
+	// }
+
+	// write screenshot to file
+	err = ioutil.WriteFile("instagram-profile.png", buf, 0644)
+	if err != nil {
+		log.Fatal(err)
+	}
+	// print captured text from page
+	fmt.Println(texter)
+	return texter
+}
+
+func screenshot(urlstr, sel string, res *[]byte, textdata *string) chromedp.Tasks {
+	return chromedp.Tasks{
+		chromedp.Navigate(urlstr),
+		chromedp.Sleep(2 * time.Second),
+		//chromedp.WaitReady(sel),
+		chromedp.Text(sel, textdata, chromedp.NodeVisible, chromedp.ByID),
+		chromedp.Screenshot(sel, res, chromedp.NodeVisible, chromedp.ByID),
+	}
 }

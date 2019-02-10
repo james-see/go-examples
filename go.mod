@@ -2,6 +2,7 @@ module github.com/jamesacampbell/go-examples
 
 require (
 	github.com/bmizerany/assert v0.0.0-20160611221934-b7ed37b82869 // indirect
+	github.com/chromedp/chromedp v0.1.2
 	github.com/deckarep/golang-set v1.7.1 // indirect
 	github.com/go-redis/redis v6.14.2+incompatible
 	github.com/gobs/httpclient v0.0.0-20181206032725-a8bcaf3c3264 // indirect

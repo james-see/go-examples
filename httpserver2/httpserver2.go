@@ -24,4 +24,5 @@ func HTTPExample() {
 	//srv := http.ListenAndServe(":1337", nil) // noob server port l0l
 	time.Sleep(10 * time.Second)
 	server.Shutdown(nil)
+	return
 }
